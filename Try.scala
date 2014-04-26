@@ -8,13 +8,14 @@ class Cigarettes
 case class UnderAgeException(message: String) extends Exception(message)
 
 object CigaretteSeller {
-  def buyCigarettes(customer: Customer): Try[Cigarettes] =
-    Try {
-      if (customer.age < 16)
-        throw UnderAgeException(s"Customer must be older than 16, but was ${customer.age}")
-      else
-        new Cigarettes
-    }
+  def buyCigarettesSafely(customer: Customer): Try[Cigarettes] =
+    Try(buyCigarettes(customer))
+  def buyCigarettes(customer: Customer): Cigarettes =
+    if (customer.age < 16)
+      throw UnderAgeException(s"Customer must be older than 16, but was ${customer.age}")
+    else
+      new Cigarettes
+
 }
 
 object UrlParser {
