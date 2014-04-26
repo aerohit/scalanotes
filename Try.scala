@@ -69,12 +69,22 @@ object Trying extends App {
     case Failure(e) => println(s"Problem fetching content: ${e.getMessage}")
   }
   println("****************")
-  val content: Try[Iterator[String]] = getURLContent("http://www.google.com") recover {
+  val content1: Try[Iterator[String]] = getURLContent("http://www.google.com") recover {
     case e: MalformedURLException => Iterator("Enter a valid url")
     case e: FileNotFoundException => Iterator("Resource isn't available")
   }
-  println(content)
+  println(content1)
 
-  // A tip, if there a default response in case of failure, use getOrElse,
-  // whereas if you want to treat each failure differently, the use recover.
+  val content2: Try[Iterator[String]] = getURLContent("http://www.google.com") recoverWith {
+    case e: MalformedURLException => Try(Iterator("Enter a valid url"))
+    case e: FileNotFoundException => Try(Iterator("Resource isn't available"))
+  }
+  println(content2)
+
+  val content3: Try[Iterator[String]] = getURLContent("http://www.google.com") orElse Try(Iterator("Enter a valid url"))
+
+  val content4: Option[Iterator[String]] = getURLContent("http://www.google.com").toOption
+
+  val countLines: Try[Int] = getURLContent("http://www.google.com") transform (s => Try(s.length), th => Try(0))
+  println(countLines)
 }
