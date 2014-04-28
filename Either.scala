@@ -55,4 +55,12 @@ object Eithering extends App {
   println(aeContent.right.toSeq)
   println(goContent.left.toSeq)
   println(goContent.right.toSeq)
+
+  val content: Iterator[String] =
+    aeContent.fold(Iterator(_), _.getLines)
+  val moreContent: Iterator[String] =
+    goContent.fold(Iterator(_), _.getLines)
+
+  println(content)
+  println(moreContent)
 }
