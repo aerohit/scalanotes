@@ -36,5 +36,12 @@ object Eithering extends App {
   val avgLines1: Either[String, Int] = getContent(part5).right.flatMap(p5 =>
       getContent(part6).right.map(p6 => 
           ((p5.getLines.size + p6.getLines.size)/2)))
-  println(avgLines)
+  println(avgLines1)
+
+  val avgLines2: Either[String, Int] =
+    for {
+      source1 <- getContent(part5).right
+      source2 <- getContent(part6).right
+    } yield (source1.getLines.size + source2.getLines.size)/2
+  println(avgLines2)
 }
