@@ -44,4 +44,13 @@ object Eithering extends App {
       source2 <- getContent(part6).right
     } yield (source1.getLines.size + source2.getLines.size)/2
   println(avgLines2)
+
+  println(getContent("http://aerohitsaxena.com").left.toOption)
+  println(getContent("http://aerohitsaxena.com").right.toOption)
+  println(getContent("http://google.com").left.toOption)
+  println(getContent("http://google.com").right.toOption)
+  println(getContent("http://aerohitsaxena.com").left.toSeq)
+  println(getContent("http://aerohitsaxena.com").right.toSeq)
+  println(getContent("http://google.com").left.toSeq)
+  println(getContent("http://google.com").right.toSeq)
 }
