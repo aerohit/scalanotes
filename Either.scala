@@ -30,8 +30,11 @@ object Eithering extends App {
   val moreContentL: Either[Iterator[String], Source] =
     getContent("http://google.map").left.map(Iterator(_))
 
-  println(contentR)
-  println(moreContentR)
-  println(contentL)
-  println(moreContentL)
+  val part5 = new URL("http://t.co/UR1aalX4")
+  val part6 = new URL("http://t.co/6wlKwTmu")
+
+  val avgLines1: Either[String, Int] = getContent(part5).right.flatMap(p5 =>
+      getContent(part6).right.map(p6 => 
+          ((p5.getLines.size + p6.getLines.size)/2)))
+  println(avgLines)
 }
