@@ -17,18 +17,20 @@ object Eithering extends App {
     case Left(msg) => println(msg)
     case Right(content) => content.getLines.foreach(println)
   }
+  val aeContent = getContent("http://aerohitsaxena.com")
+  val goContent = getContent("http://www.google.com") 
 
   val contentR: Either[String, Iterator[String]] =
-    getContent("http://aerohitsaxena.com").right.map(_.getLines)
+    aeContent.right.map(_.getLines)
 
   val moreContentR: Either[String, Iterator[String]] =
-    getContent("http://google.map").right.map(_.getLines)
+    goContent.right.map(_.getLines)
 
   val contentL: Either[Iterator[String], Source] =
-    getContent("http://aerohitsaxena.com").left.map(Iterator(_))
+    aeContent.left.map(Iterator(_))
 
   val moreContentL: Either[Iterator[String], Source] =
-    getContent("http://google.map").left.map(Iterator(_))
+    goContent.left.map(Iterator(_))
 
   val part5 = new URL("http://t.co/UR1aalX4")
   val part6 = new URL("http://t.co/6wlKwTmu")
@@ -45,12 +47,12 @@ object Eithering extends App {
     } yield (source1.getLines.size + source2.getLines.size)/2
   println(avgLines2)
 
-  println(getContent("http://aerohitsaxena.com").left.toOption)
-  println(getContent("http://aerohitsaxena.com").right.toOption)
-  println(getContent("http://google.com").left.toOption)
-  println(getContent("http://google.com").right.toOption)
-  println(getContent("http://aerohitsaxena.com").left.toSeq)
-  println(getContent("http://aerohitsaxena.com").right.toSeq)
-  println(getContent("http://google.com").left.toSeq)
-  println(getContent("http://google.com").right.toSeq)
+  println(aeContent.left.toOption)
+  println(aeContent.right.toOption)
+  println(goContent.left.toOption)
+  println(goContent.right.toOption)
+  println(aeContent.left.toSeq)
+  println(aeContent.right.toSeq)
+  println(goContent.left.toSeq)
+  println(goContent.right.toSeq)
 }
