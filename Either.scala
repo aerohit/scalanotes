@@ -1,13 +1,23 @@
 import scala.io.Source
 import java.net.URL
+import scala.util.control.Exception.catching
+import java.net.MalformedURLException
 
 object ContentReader {
   implicit def convertStringToURL(urlstr: String) = new URL(urlstr)
-  def getContent(url: URL): Either[String, Source] = 
+  def getContent(url: URL): Either[String, Source] =
     if (url.getHost.contains("google"))
       Left("Too bad, the content is blocked")
     else
       Right(Source.fromURL(url))
+
+  def parseURL(urlstr: String): Either[MalformedURLException, URL] = 
+    ExceptionHandling.handling(classOf[MalformedURLException])(convertStringToURL(urlstr))
+}
+
+object ExceptionHandling {
+  def handling[Ex <: Throwable, T](exType: Class[Ex])(block: => Unit) =
+    catching(exType).either(block).asInstanceOf[Either[Ex, T]]
 }
 
 object Eithering extends App {
@@ -63,4 +73,5 @@ object Eithering extends App {
 
   println(content)
   println(moreContent)
+  println(parseURL("http"))
 }
