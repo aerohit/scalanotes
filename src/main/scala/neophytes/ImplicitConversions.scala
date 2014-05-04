@@ -1,3 +1,5 @@
+package neophytes
+
 class RichList[T](value: List[T]) {
   def append(other: List[T]): List[T] = {
     value ::: other

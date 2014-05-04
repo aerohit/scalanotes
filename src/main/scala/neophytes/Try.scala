@@ -1,3 +1,5 @@
+package neophytes
+
 import scala.util.{Try, Success, Failure}
 import java.net.URL
 import java.io.InputStream

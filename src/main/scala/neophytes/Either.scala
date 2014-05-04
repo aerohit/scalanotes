@@ -1,3 +1,5 @@
+package neophytes
+
 import scala.io.Source
 import java.net.URL
 import scala.util.control.Exception.catching
