@@ -1,3 +1,5 @@
+package fppinscala.chap2
+
 object GettingStartedExercises {
   // Ex 1
   def fibonacci(n: Int): Int = {

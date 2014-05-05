@@ -1,3 +1,5 @@
+package fppinscala.chap2
+
 import org.specs2.mutable._
 
 class GettingStartedSampleTest extends Specification {

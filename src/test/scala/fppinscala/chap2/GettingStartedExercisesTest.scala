@@ -1,3 +1,5 @@
+package fppinscala.chap2
+
 import org.specs2.mutable._
 import org.specs2.execute._
 import org.scalacheck.Properties
