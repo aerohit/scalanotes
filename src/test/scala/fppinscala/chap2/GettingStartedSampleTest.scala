@@ -17,4 +17,13 @@ class GettingStartedSampleTest extends Specification {
       factorialTailRec(5) mustEqual 120
     }
   }
+
+  "A higher order function" should {
+    "apply function to its arguments" in {
+      applyFunc(3, (x: Int) => x * x) mustEqual 9
+      applyFunc(3, (x) => x + 4) mustEqual 7
+      applyFunc(3, x => x - 2) mustEqual 1
+      applyFunc(3, _ * 8) mustEqual 24
+    }
+  }
 }

@@ -10,4 +10,6 @@ object GettingStartedSample {
       else go(n - 1, n * acc)
     go(n, 1)
   }
+
+  def applyFunc(x: Int, f: Int => Int) = f(x)
 }
