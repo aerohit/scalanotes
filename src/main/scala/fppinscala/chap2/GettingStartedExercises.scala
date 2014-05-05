@@ -8,4 +8,25 @@ object GettingStartedExercises {
 
     go(n, 0, 1)
   }
+
+  // Ex 2
+  def isSorted[A](as: Array[A], gt: (A, A) => Boolean): Boolean = {
+    @annotation.tailrec
+    def go(curr: Int, prev: Int): Boolean = {
+      if (curr >= as.length) true
+      else if (gt(as(prev), as(curr))) go(curr + 1, curr)
+      else false
+    }
+    go(1, 0)
+  }
+
+  // Ex 3
+  def partial1[A, B, C](a: A, f: (A, B) => C): B => C = {
+    b => f(a, b)
+  }
+
+  // Ex 4
+  def curry[A, B, C](f: (A, B) => C): A => (B => C) = {
+    a => b => f(a, b)
+  }
 }
