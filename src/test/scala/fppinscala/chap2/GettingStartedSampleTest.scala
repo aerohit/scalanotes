@@ -26,4 +26,12 @@ class GettingStartedSampleTest extends Specification {
       applyFunc(3, _ * 8) mustEqual 24
     }
   }
+
+  "A polymorphic binary search" should {
+    "find a key inside an array of integers" in {
+      val arr = Array(1,3,5,7,9)
+      binarySearch(5, arr, (x: Int, y: Int) => x > y) mustEqual 2
+      binarySearch(6, arr, (x: Int, y: Int) => x > y) must beLessThan(0)
+    }
+  }
 }
