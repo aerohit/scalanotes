@@ -1,6 +1,6 @@
 import org.specs2.mutable._
 
-class SampleCodeTest extends Specification {
+class GettingStartedSampleTest extends Specification {
   import SampleCode._
   "The function" should {
     "calculate factorial non-tail-recursively" in {

@@ -1,4 +1,4 @@
-object SampleCode {
+object GettingStartedSample {
   def factorialNonTailRec(n: Int): Int =
     if (n == 0) 1 
     else n * factorialNonTailRec(n - 1)
