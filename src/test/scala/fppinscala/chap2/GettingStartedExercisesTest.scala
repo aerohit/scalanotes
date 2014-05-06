@@ -20,10 +20,10 @@ class GettingStartedExercisesTest extends Specification with PendingUntilFixed {
 
     // Ex 2
     "check if an array is sorted" in {
-      isSorted[Int](Array(), (x,y) => x < y) mustEqual true
-      isSorted[Int](Array(1, 3, 5), (x,y) => x < y) mustEqual true
-      isSorted[Int](Array(1, 9, 5), (x,y) => x < y) mustEqual false
-      isSorted[Int](Array(11, 9, 5),(x,y) => x > y) mustEqual true
+      isSorted[Int](Array(), (x,y) => x < y) must beTrue
+      isSorted[Int](Array(1, 3, 5), (x,y) => x < y) must beTrue
+      isSorted[Int](Array(1, 9, 5), (x,y) => x < y) must beFalse
+      isSorted[Int](Array(11, 9, 5),(x,y) => x > y) must beTrue
     }
 
     // Ex 3
@@ -31,7 +31,19 @@ class GettingStartedExercisesTest extends Specification with PendingUntilFixed {
       val subject = partial1(1, (x: Int, y: Int) => x + y)
       val expectedFunc =  (x: Int) => x + 1
       // why can't we do the following?
-      subject mustEqual expectedFunc
+      def haveSameType[A, B](a: A, b: B)(implicit ev: A =:= B): Unit = ()
+      haveSameType("foo", "bar")
+      //haveSameType("foo", 3) shouldNot compile
+      haveSameType(subject, expectedFunc)
+      import scala.reflect.runtime.universe._
+      def checkSameType[A, B](a: A, b: B)(implicit aType: TypeTag[A], bType: TypeTag[B]) = {
+        println(a)
+        println(b)
+        a == b
+      }
+      checkSameType(subject, expectedFunc) must beTrue
+      //subject mustEqual expectedFunc
+      ok
     }.pendingUntilFixed
 
     // Ex 4
