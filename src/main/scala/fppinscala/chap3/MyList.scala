@@ -82,6 +82,10 @@ object MyList {
     //case MyCons(h, t) => f(foldLeft(t, z)(f), h)
   }
 
+  def reverseFL[A](list: MyList[A]) = foldLeft(list, MyList[A]())((l, a) => append(MyList(a), l))
+
+  def reverseFR[A](list: MyList[A]) = foldRight(list, MyList[A]())((a, l) => append(l, MyList(a)))
+
   def apply[A](elements: A*): MyList[A] =
     if (elements.isEmpty) MyNil
     else MyCons(elements.head, apply(elements.tail: _*))

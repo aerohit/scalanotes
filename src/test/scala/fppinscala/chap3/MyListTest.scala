@@ -118,6 +118,17 @@ class MyListTest extends Specification {
       productFL(MyList()) mustEqual 1
       productFL(MyList(1, 2, 3)) mustEqual 6
     }
+
+    // Ex 12
+    "be able to be reversed using foldLeft" in {
+      reverseFL(MyList()) mustEqual MyList()
+      reverseFL(MyList(1, 2, 3)) mustEqual MyList(3, 2, 1)
+    }
+
+    "be able to be reversed using foldRight" in {
+      reverseFR(MyList()) mustEqual MyList()
+      reverseFR(MyList(1, 2, 3)) mustEqual MyList(3, 2, 1)
+    }
   }
 }
 
