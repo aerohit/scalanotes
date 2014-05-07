@@ -71,6 +71,15 @@ class MyListTest extends Specification {
       foldRightNTR(MyList(3, 5, 2), 1)(_ * _) mustEqual 30
     }
 
+    "foldRight tail recursively" in {
+      foldRightTR(MyList[Int](), 0)(_ + _) mustEqual 0
+      foldRightTR(MyList(1), 0)(_ + _) mustEqual 1
+      foldRightTR(MyList(1, 4, 8), 0)(_ + _) mustEqual 13
+      foldRightTR(MyList[Int](), 1)(_ * _) mustEqual 1
+      foldRightTR(MyList(7), 1)(_ * _) mustEqual 7
+      foldRightTR(MyList(3, 5, 2), 1)(_ * _) mustEqual 30
+    }
+
     "foldRight non-tail recursively with MyNil and MyCons(...)" in {
       foldRightNTR(MyList(3, 5, 2), MyList[Int]())(MyCons(_, _)) mustEqual MyList(3, 5, 2)
     }
@@ -100,6 +109,15 @@ class MyListTest extends Specification {
       foldLeftTR(MyList[Int](), 1)(_ * _) mustEqual 1
       foldLeftTR(MyList(7), 1)(_ * _) mustEqual 7
       foldLeftTR(MyList(3, 5, 2), 1)(_ * _) mustEqual 30
+    }
+
+    "foldLeft non-tail recursively" in {
+      foldLeftNTR(MyList[Int](), 0)(_ + _) mustEqual 0
+      foldLeftNTR(MyList(1), 0)(_ + _) mustEqual 1
+      foldLeftNTR(MyList(1, 4, 8), 0)(_ + _) mustEqual 13
+      foldLeftNTR(MyList[Int](), 1)(_ * _) mustEqual 1
+      foldLeftNTR(MyList(7), 1)(_ * _) mustEqual 7
+      foldLeftNTR(MyList(3, 5, 2), 1)(_ * _) mustEqual 30
     }
 
     // Ex 11

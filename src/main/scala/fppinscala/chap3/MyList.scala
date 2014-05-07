@@ -67,6 +67,12 @@ object MyList {
     case MyCons(h, t) => MyCons(h, init(t))
   }
 
+  @annotation.tailrec
+  def foldRightTR[A, B](as: MyList[A], z: B)(f: (A, B) => B): B = as match {
+    case MyNil => z
+    case MyCons(h, t) => foldRightTR(t, f(h, z))(f)
+  }
+
   def foldRightNTR[A, B](as: MyList[A], z: B)(f: (A, B) => B): B = as match {
     case MyNil => z
     case MyCons(h, t) => f(h, foldRightNTR(t, z)(f))
@@ -76,10 +82,15 @@ object MyList {
 
   def lengthFL[A](list: MyList[A]): Int = foldLeftTR(list, 0)((b, _) => b + 1)
 
+  @annotation.tailrec
   def foldLeftTR[A, B](as: MyList[A], z: B)(f: (B, A) => B): B = as match {
     case MyNil => z
     case MyCons(h, t) => foldLeftTR(t, f(z, h))(f)
-    //case MyCons(h, t) => f(foldLeftTR(t, z)(f), h)
+  }
+
+  def foldLeftNTR[A, B](as: MyList[A], z: B)(f: (B, A) => B): B = as match {
+    case MyNil => z
+    case MyCons(h, t) => f(foldLeftTR(t, z)(f), h)
   }
 
   def reverseFL[A](list: MyList[A]) = foldLeftTR(list, MyList[A]())((l, a) => append(MyList(a), l))
