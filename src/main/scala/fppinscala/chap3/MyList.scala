@@ -60,6 +60,9 @@ object MyList {
     case MyCons(h, t) => MyCons(h, append(t, list2))
   }
 
+  def appendFR[A](list1: MyList[A], list2: MyList[A]): MyList[A] =
+    foldRightDefault(list1, list2)((a, l) => MyCons(a, l))
+
   // Ex 6
   def init[A](list: MyList[A]): MyList[A] = list match {
     case MyNil => throw new RuntimeException

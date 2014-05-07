@@ -166,6 +166,13 @@ class MyListTest extends Specification {
       foldRightUsingFL(MyList(7), 1)(_ * _) mustEqual 7
       foldRightUsingFL(MyList(3, 5, 2), 1)(_ * _) mustEqual 30
     }
+
+    "be able to append using foldRight" in {
+      appendFR(MyList(), MyList()) mustEqual MyList()
+      appendFR(MyList(1), MyList()) mustEqual MyList(1)
+      appendFR(MyList(), MyList(1)) mustEqual MyList(1)
+      appendFR(MyList(7, 8, 9), MyList(3, 2, 1)) mustEqual MyList(7, 8, 9, 3, 2, 1)
+    }
   }
 }
 
