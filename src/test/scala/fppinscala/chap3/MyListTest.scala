@@ -62,70 +62,70 @@ class MyListTest extends Specification {
       init(MyList(1, 3, 5, 8)) mustEqual MyList(1, 3, 5)
     }
 
-    "foldRight" in {
-      foldRight(MyList[Int](), 0)(_ + _) mustEqual 0
-      foldRight(MyList(1), 0)(_ + _) mustEqual 1
-      foldRight(MyList(1, 4, 8), 0)(_ + _) mustEqual 13
-      foldRight(MyList[Int](), 1)(_ * _) mustEqual 1
-      foldRight(MyList(7), 1)(_ * _) mustEqual 7
-      foldRight(MyList(3, 5, 2), 1)(_ * _) mustEqual 30
+    "foldRightNTR" in {
+      foldRightNTR(MyList[Int](), 0)(_ + _) mustEqual 0
+      foldRightNTR(MyList(1), 0)(_ + _) mustEqual 1
+      foldRightNTR(MyList(1, 4, 8), 0)(_ + _) mustEqual 13
+      foldRightNTR(MyList[Int](), 1)(_ * _) mustEqual 1
+      foldRightNTR(MyList(7), 1)(_ * _) mustEqual 7
+      foldRightNTR(MyList(3, 5, 2), 1)(_ * _) mustEqual 30
     }
 
-    "foldRight with MyNil and MyCons(...)" in {
-      foldRight(MyList(3, 5, 2), MyList[Int]())(MyCons(_, _)) mustEqual MyList(3, 5, 2)
+    "foldRightNTR with MyNil and MyCons(...)" in {
+      foldRightNTR(MyList(3, 5, 2), MyList[Int]())(MyCons(_, _)) mustEqual MyList(3, 5, 2)
     }
 
-    "compute sum of integerst using foldRight" in {
+    "compute sum of integerst using foldRightNTR" in {
       sumFR(MyList()) mustEqual 0
       sumFR(MyList(1, 2, 3)) mustEqual 6
     }
 
-    "calculate product of integers using foldRight" in {
+    "calculate product of integers using foldRightNTR" in {
       productFR(MyList()) mustEqual 1
       productFR(MyList(1, 2, 3)) mustEqual 6
     }
 
     // Ex 9
-    "compute length using foldRight" in {
+    "compute length using foldRightNTR" in {
       lengthFR(MyList[Int]()) mustEqual 0
       lengthFR(MyList(1)) mustEqual 1
       lengthFR(MyList(0, 0, 0)) mustEqual 3
     }
 
     // Ex 10
-    "foldLeft" in {
-      foldLeft(MyList[Int](), 0)(_ + _) mustEqual 0
-      foldLeft(MyList(1), 0)(_ + _) mustEqual 1
-      foldLeft(MyList(1, 4, 8), 0)(_ + _) mustEqual 13
-      foldLeft(MyList[Int](), 1)(_ * _) mustEqual 1
-      foldLeft(MyList(7), 1)(_ * _) mustEqual 7
-      foldLeft(MyList(3, 5, 2), 1)(_ * _) mustEqual 30
+    "foldLeftTR" in {
+      foldLeftTR(MyList[Int](), 0)(_ + _) mustEqual 0
+      foldLeftTR(MyList(1), 0)(_ + _) mustEqual 1
+      foldLeftTR(MyList(1, 4, 8), 0)(_ + _) mustEqual 13
+      foldLeftTR(MyList[Int](), 1)(_ * _) mustEqual 1
+      foldLeftTR(MyList(7), 1)(_ * _) mustEqual 7
+      foldLeftTR(MyList(3, 5, 2), 1)(_ * _) mustEqual 30
     }
 
     // Ex 11
-    "compute length using foldLeft" in {
+    "compute length using foldLeftTR" in {
       lengthFL(MyList[Int]()) mustEqual 0
       lengthFL(MyList(1)) mustEqual 1
       lengthFL(MyList(0, 0, 0)) mustEqual 3
     }
 
-    "compute sum of integerst using foldRight" in {
+    "compute sum of integerst using foldRightNTR" in {
       sumFL(MyList()) mustEqual 0
       sumFL(MyList(1, 2, 3)) mustEqual 6
     }
 
-    "calculate product of integers using foldRight" in {
+    "calculate product of integers using foldRightNTR" in {
       productFL(MyList()) mustEqual 1
       productFL(MyList(1, 2, 3)) mustEqual 6
     }
 
     // Ex 12
-    "be able to be reversed using foldLeft" in {
+    "be able to be reversed using foldLeftTR" in {
       reverseFL(MyList()) mustEqual MyList()
       reverseFL(MyList(1, 2, 3)) mustEqual MyList(3, 2, 1)
     }
 
-    "be able to be reversed using foldRight" in {
+    "be able to be reversed using foldRightNTR" in {
       reverseFR(MyList()) mustEqual MyList()
       reverseFR(MyList(1, 2, 3)) mustEqual MyList(3, 2, 1)
     }

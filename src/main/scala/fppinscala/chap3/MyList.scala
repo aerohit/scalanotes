@@ -10,9 +10,9 @@ object MyList {
     case MyCons(head, tail) => head + sum(tail)
   }
 
-  def sumFR(list: MyList[Int]): Int = foldRight(list, 0)(_ + _)
+  def sumFR(list: MyList[Int]): Int = foldRightNTR(list, 0)(_ + _)
 
-  def sumFL(list: MyList[Int]): Int = foldLeft(list, 0)(_ + _)
+  def sumFL(list: MyList[Int]): Int = foldLeftTR(list, 0)(_ + _)
 
   def product(list: MyList[Int]): Int = list match {
     case MyNil => 1
@@ -20,9 +20,9 @@ object MyList {
     case MyCons(head, tail) => head * product(tail)
   }
   
-  def productFR(list: MyList[Int]): Int = foldRight(list, 1)(_ * _)
+  def productFR(list: MyList[Int]): Int = foldRightNTR(list, 1)(_ * _)
   
-  def productFL(list: MyList[Int]): Int = foldLeft(list, 1)(_ * _)
+  def productFL(list: MyList[Int]): Int = foldLeftTR(list, 1)(_ * _)
 
   // Ex 2
   def tail[A](list: MyList[A]): MyList[A] = list match {
@@ -67,24 +67,24 @@ object MyList {
     case MyCons(h, t) => MyCons(h, init(t))
   }
 
-  def foldRight[A, B](as: MyList[A], z: B)(f: (A, B) => B): B = as match {
+  def foldRightNTR[A, B](as: MyList[A], z: B)(f: (A, B) => B): B = as match {
     case MyNil => z
-    case MyCons(h, t) => f(h, foldRight(t, z)(f))
+    case MyCons(h, t) => f(h, foldRightNTR(t, z)(f))
   }
 
-  def lengthFR[A](list: MyList[A]): Int = foldRight(list, 0)((_, b) => b + 1)
+  def lengthFR[A](list: MyList[A]): Int = foldRightNTR(list, 0)((_, b) => b + 1)
 
-  def lengthFL[A](list: MyList[A]): Int = foldLeft(list, 0)((b, _) => b + 1)
+  def lengthFL[A](list: MyList[A]): Int = foldLeftTR(list, 0)((b, _) => b + 1)
 
-  def foldLeft[A, B](as: MyList[A], z: B)(f: (B, A) => B): B = as match {
+  def foldLeftTR[A, B](as: MyList[A], z: B)(f: (B, A) => B): B = as match {
     case MyNil => z
-    case MyCons(h, t) => foldLeft(t, f(z, h))(f)
-    //case MyCons(h, t) => f(foldLeft(t, z)(f), h)
+    case MyCons(h, t) => foldLeftTR(t, f(z, h))(f)
+    //case MyCons(h, t) => f(foldLeftTR(t, z)(f), h)
   }
 
-  def reverseFL[A](list: MyList[A]) = foldLeft(list, MyList[A]())((l, a) => append(MyList(a), l))
+  def reverseFL[A](list: MyList[A]) = foldLeftTR(list, MyList[A]())((l, a) => append(MyList(a), l))
 
-  def reverseFR[A](list: MyList[A]) = foldRight(list, MyList[A]())((a, l) => append(l, MyList(a)))
+  def reverseFR[A](list: MyList[A]) = foldRightNTR(list, MyList[A]())((a, l) => append(l, MyList(a)))
 
   def apply[A](elements: A*): MyList[A] =
     if (elements.isEmpty) MyNil
