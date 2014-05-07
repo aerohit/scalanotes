@@ -84,18 +84,18 @@ class MyListTest extends Specification {
       foldRightNTR(MyList(3, 5, 2), MyList[Int]())(MyCons(_, _)) mustEqual MyList(3, 5, 2)
     }
 
-    "compute sum of integers using foldRight non-tail recursively" in {
+    "compute sum of integers using foldRight" in {
       sumFR(MyList()) mustEqual 0
       sumFR(MyList(1, 2, 3)) mustEqual 6
     }
 
-    "calculate product of integers using foldRight non-tail recursively" in {
+    "calculate product of integers using foldRight" in {
       productFR(MyList()) mustEqual 1
       productFR(MyList(1, 2, 3)) mustEqual 6
     }
 
     // Ex 9
-    "compute length using foldRight non-tail recursively" in {
+    "compute length using foldRight" in {
       lengthFR(MyList[Int]()) mustEqual 0
       lengthFR(MyList(1)) mustEqual 1
       lengthFR(MyList(0, 0, 0)) mustEqual 3
@@ -121,29 +121,29 @@ class MyListTest extends Specification {
     }
 
     // Ex 11
-    "compute length using foldLeft tail recursively" in {
+    "compute length using foldLeft" in {
       lengthFL(MyList[Int]()) mustEqual 0
       lengthFL(MyList(1)) mustEqual 1
       lengthFL(MyList(0, 0, 0)) mustEqual 3
     }
 
-    "compute sum of integers using foldLeft tail recursively" in {
+    "compute sum of integers using foldLeft" in {
       sumFL(MyList()) mustEqual 0
       sumFL(MyList(1, 2, 3)) mustEqual 6
     }
 
-    "calculate product of integers using foldLeft tail recursively" in {
+    "calculate product of integers using foldLeft" in {
       productFL(MyList()) mustEqual 1
       productFL(MyList(1, 2, 3)) mustEqual 6
     }
 
     // Ex 12
-    "be able to reverse using foldLeft tail recursively" in {
+    "be able to reverse using foldLeft" in {
       reverseFL(MyList()) mustEqual MyList()
       reverseFL(MyList(1, 2, 3)) mustEqual MyList(3, 2, 1)
     }
 
-    "be able to reverse using foldRight non-tail recursively" in {
+    "be able to reverse using foldRight" in {
       reverseFR(MyList()) mustEqual MyList()
       reverseFR(MyList(1, 2, 3)) mustEqual MyList(3, 2, 1)
     }

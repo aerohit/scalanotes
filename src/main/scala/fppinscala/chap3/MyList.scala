@@ -10,9 +10,9 @@ object MyList {
     case MyCons(head, tail) => head + sum(tail)
   }
 
-  def sumFR(list: MyList[Int]): Int = foldRightNTR(list, 0)(_ + _)
+  def sumFR(list: MyList[Int]): Int = foldRightDefault(list, 0)(_ + _)
 
-  def sumFL(list: MyList[Int]): Int = foldLeftTR(list, 0)(_ + _)
+  def sumFL(list: MyList[Int]): Int = foldLeftDefault(list, 0)(_ + _)
 
   def product(list: MyList[Int]): Int = list match {
     case MyNil => 1
@@ -20,9 +20,9 @@ object MyList {
     case MyCons(head, tail) => head * product(tail)
   }
   
-  def productFR(list: MyList[Int]): Int = foldRightNTR(list, 1)(_ * _)
+  def productFR(list: MyList[Int]): Int = foldRightDefault(list, 1)(_ * _)
   
-  def productFL(list: MyList[Int]): Int = foldLeftTR(list, 1)(_ * _)
+  def productFL(list: MyList[Int]): Int = foldLeftDefault(list, 1)(_ * _)
 
   // Ex 2
   def tail[A](list: MyList[A]): MyList[A] = list match {
@@ -67,6 +67,9 @@ object MyList {
     case MyCons(h, t) => MyCons(h, init(t))
   }
 
+  def foldRightDefault[A, B](as: MyList[A], z: B)(f: (A, B) => B): B =
+    foldRightNTR(as, z)(f)
+
   @annotation.tailrec
   def foldRightTR[A, B](as: MyList[A], z: B)(f: (A, B) => B): B = as match {
     case MyNil => z
@@ -78,9 +81,12 @@ object MyList {
     case MyCons(h, t) => f(h, foldRightNTR(t, z)(f))
   }
 
-  def lengthFR[A](list: MyList[A]): Int = foldRightNTR(list, 0)((_, b) => b + 1)
+  def lengthFR[A](list: MyList[A]): Int = foldRightDefault(list, 0)((_, b) => b + 1)
 
-  def lengthFL[A](list: MyList[A]): Int = foldLeftTR(list, 0)((b, _) => b + 1)
+  def lengthFL[A](list: MyList[A]): Int = foldLeftDefault(list, 0)((b, _) => b + 1)
+
+  def foldLeftDefault[A, B](as: MyList[A], z: B)(f: (B, A) => B): B =
+    foldLeftTR(as, z)(f)
 
   @annotation.tailrec
   def foldLeftTR[A, B](as: MyList[A], z: B)(f: (B, A) => B): B = as match {
@@ -90,12 +96,12 @@ object MyList {
 
   def foldLeftNTR[A, B](as: MyList[A], z: B)(f: (B, A) => B): B = as match {
     case MyNil => z
-    case MyCons(h, t) => f(foldLeftTR(t, z)(f), h)
+    case MyCons(h, t) => f(foldLeftNTR(t, z)(f), h)
   }
 
-  def reverseFL[A](list: MyList[A]) = foldLeftTR(list, MyList[A]())((l, a) => append(MyList(a), l))
+  def reverseFL[A](list: MyList[A]) = foldLeftDefault(list, MyList[A]())((l, a) => append(MyList(a), l))
 
-  def reverseFR[A](list: MyList[A]) = foldRightNTR(list, MyList[A]())((a, l) => append(l, MyList(a)))
+  def reverseFR[A](list: MyList[A]) = foldRightDefault(list, MyList[A]())((a, l) => append(l, MyList(a)))
 
   def apply[A](elements: A*): MyList[A] =
     if (elements.isEmpty) MyNil
