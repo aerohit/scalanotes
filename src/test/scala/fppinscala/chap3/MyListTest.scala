@@ -147,6 +147,25 @@ class MyListTest extends Specification {
       reverseFR(MyList()) mustEqual MyList()
       reverseFR(MyList(1, 2, 3)) mustEqual MyList(3, 2, 1)
     }
+
+    // Ex 13
+    "be able to implement foldLeft using foldRight" in {
+      foldLeftUsingFR(MyList[Int](), 0)(_ + _) mustEqual 0
+      foldLeftUsingFR(MyList(1), 0)(_ + _) mustEqual 1
+      foldLeftUsingFR(MyList(1, 4, 8), 0)(_ + _) mustEqual 13
+      foldLeftUsingFR(MyList[Int](), 1)(_ * _) mustEqual 1
+      foldLeftUsingFR(MyList(7), 1)(_ * _) mustEqual 7
+      foldLeftUsingFR(MyList(3, 5, 2), 1)(_ * _) mustEqual 30
+    }
+
+    "be able to implement foldRight using foldLeft" in {
+      foldRightUsingFL(MyList[Int](), 0)(_ + _) mustEqual 0
+      foldRightUsingFL(MyList(1), 0)(_ + _) mustEqual 1
+      foldRightUsingFL(MyList(1, 4, 8), 0)(_ + _) mustEqual 13
+      foldRightUsingFL(MyList[Int](), 1)(_ * _) mustEqual 1
+      foldRightUsingFL(MyList(7), 1)(_ * _) mustEqual 7
+      foldRightUsingFL(MyList(3, 5, 2), 1)(_ * _) mustEqual 30
+    }
   }
 }
 

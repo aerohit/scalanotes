@@ -81,6 +81,9 @@ object MyList {
     case MyCons(h, t) => f(h, foldRightNTR(t, z)(f))
   }
 
+  def foldRightUsingFL[A, B](as: MyList[A], z: B)(f: (A, B) => B): B =
+    foldLeftDefault(as, z)((b, a) => f(a, b))
+
   def lengthFR[A](list: MyList[A]): Int = foldRightDefault(list, 0)((_, b) => b + 1)
 
   def lengthFL[A](list: MyList[A]): Int = foldLeftDefault(list, 0)((b, _) => b + 1)
@@ -98,6 +101,9 @@ object MyList {
     case MyNil => z
     case MyCons(h, t) => f(foldLeftNTR(t, z)(f), h)
   }
+
+  def foldLeftUsingFR[A, B](as: MyList[A], z: B)(f: (B, A) => B): B =
+    foldRightDefault(as, z)((a,b) => f(b, a))
 
   def reverseFL[A](list: MyList[A]) = foldLeftDefault(list, MyList[A]())((l, a) => append(MyList(a), l))
 
