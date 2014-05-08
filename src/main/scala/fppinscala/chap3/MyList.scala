@@ -115,6 +115,9 @@ object MyList {
 
   def reverseFR[A](list: MyList[A]) = foldRightDefault(list, MyList[A]())((a, l) => append(l, MyList(a)))
 
+  def concatenate[A](lists: MyList[MyList[A]]): MyList[A] =
+    foldRightDefault(lists, MyList[A]())((l, ls) => append(l, ls))
+
   def apply[A](elements: A*): MyList[A] =
     if (elements.isEmpty) MyNil
     else MyCons(elements.head, apply(elements.tail: _*))

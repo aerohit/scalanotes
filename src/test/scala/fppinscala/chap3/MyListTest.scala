@@ -182,6 +182,13 @@ class MyListTest extends Specification with PendingUntilFixed {
       appendFR(MyList(), MyList(1)) mustEqual MyList(1)
       appendFR(MyList(7, 8, 9), MyList(3, 2, 1)) mustEqual MyList(7, 8, 9, 3, 2, 1)
     }
+
+    // Ex 15
+    "be able to concatenate a list of lists" in {
+      concatenate(MyList()) mustEqual MyList()
+      concatenate(MyList(MyList(1))) mustEqual MyList(1)
+      concatenate(MyList(MyList(9, 3, 5), MyList(1, 2))) mustEqual MyList(9, 3, 5, 1, 2)
+    }
   }
 }
 
