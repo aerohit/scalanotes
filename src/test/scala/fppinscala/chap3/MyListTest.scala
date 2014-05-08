@@ -189,6 +189,20 @@ class MyListTest extends Specification with PendingUntilFixed {
       concatenate(MyList(MyList(1))) mustEqual MyList(1)
       concatenate(MyList(MyList(9, 3, 5), MyList(1, 2))) mustEqual MyList(9, 3, 5, 1, 2)
     }
+
+    // Ex 16
+    "be able to add 1 to each element of a list of integers" in {
+      mapS(MyList(), (x: Int) => x + 1) mustEqual MyList()
+      mapS(MyList(1), (x: Int) => x + 1) mustEqual MyList(2)
+      mapS(MyList(3, 5, 7), (x: Int) => x + 1) mustEqual MyList(4, 6, 8)
+    }
+
+    // Ex 17
+    "be able to convert a list of doubles in to a list of strings" in {
+      mapS(MyList(), (x: Double) => x.toString) mustEqual MyList()
+      mapS(MyList(2.0), (x: Double) => x.toString) mustEqual MyList("2.0")
+      mapS(MyList(3.0, 5.0, 7.0), (x: Double) => x.toString) mustEqual MyList("3.0", "5.0", "7.0")
+    }
   }
 }
 

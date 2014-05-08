@@ -118,6 +118,11 @@ object MyList {
   def concatenate[A](lists: MyList[MyList[A]]): MyList[A] =
     foldRightDefault(lists, MyList[A]())((l, ls) => append(l, ls))
 
+  def mapS[A, B](list: MyList[A], f: A => B): MyList[B] = list match {
+    case MyNil => MyNil
+    case MyCons(h, t) => MyCons(f(h), mapS(t, f))
+  }
+
   def apply[A](elements: A*): MyList[A] =
     if (elements.isEmpty) MyNil
     else MyCons(elements.head, apply(elements.tail: _*))
