@@ -118,9 +118,9 @@ object MyList {
   def concatenate[A](lists: MyList[MyList[A]]): MyList[A] =
     foldRightDefault(lists, MyList[A]())((l, ls) => append(l, ls))
 
-  def mapS[A, B](list: MyList[A], f: A => B): MyList[B] = list match {
+  def mapS[A, B](list: MyList[A])(f: A => B): MyList[B] = list match {
     case MyNil => MyNil
-    case MyCons(h, t) => MyCons(f(h), mapS(t, f))
+    case MyCons(h, t) => MyCons(f(h), mapS(t)(f))
   }
 
   def apply[A](elements: A*): MyList[A] =
