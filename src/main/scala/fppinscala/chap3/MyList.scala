@@ -60,6 +60,9 @@ object MyList {
     case MyCons(h, t) => MyCons(h, append(t, list2))
   }
 
+  def appendFL[A](list1: MyList[A], list2: MyList[A]): MyList[A] =
+    ???
+
   def appendFR[A](list1: MyList[A], list2: MyList[A]): MyList[A] =
     foldRightDefault(list1, list2)((a, l) => MyCons(a, l))
 

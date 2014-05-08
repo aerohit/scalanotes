@@ -1,9 +1,10 @@
 package fppinscala.chap3
 
 import org.specs2.mutable._
+import org.specs2.execute._
 import MyList._
 
-class MyListTest extends Specification {
+class MyListTest extends Specification with PendingUntilFixed {
   "The list api" should {
     "calculate sum of integers" in {
       sum(MyList()) mustEqual 0
@@ -166,6 +167,14 @@ class MyListTest extends Specification {
       foldRightUsingFL(MyList(7), 1)(_ * _) mustEqual 7
       foldRightUsingFL(MyList(3, 5, 2), 1)(_ * _) mustEqual 30
     }
+
+    // Ex 14
+    "be able to append using foldLeft" in {
+      appendFL(MyList(), MyList()) mustEqual MyList()
+      appendFL(MyList(1), MyList()) mustEqual MyList(1)
+      appendFL(MyList(), MyList(1)) mustEqual MyList(1)
+      appendFL(MyList(7, 8, 9), MyList(3, 2, 1)) mustEqual MyList(7, 8, 9, 3, 2, 1)
+    }.pendingUntilFixed
 
     "be able to append using foldRight" in {
       appendFR(MyList(), MyList()) mustEqual MyList()
