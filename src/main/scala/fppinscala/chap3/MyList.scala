@@ -133,6 +133,21 @@ object MyList {
     case MyCons(h, t) => append(f(h), flatMap(t)(f))
   }
 
+  def filterUsingFM[A](list: MyList[A])(p: A => Boolean): MyList[A] =
+    flatMap(list)(a => if(p(a)) MyList(a) else MyNil)
+
+  def sumCorrespondingElements(list1: MyList[Int], list2: MyList[Int]): MyList[Int] = (list1, list2) match {
+    case (_, MyNil) => MyNil
+    case (MyNil, _) => MyNil
+    case (MyCons(h1, t1), MyCons(h2, t2)) => MyCons(h1 + h2, sumCorrespondingElements(t1, t2))
+  }
+
+  def combine[A, B, C](l1: MyList[A], l2: MyList[B])(f: (A, B) => C): MyList[C] = (l1, l2) match {
+    case (_, MyNil) => MyNil
+    case (MyNil, _) => MyNil
+    case (MyCons(h1, t1), MyCons(h2, t2)) => MyCons(f(h1, h2), combine(t1, t2)(f))
+  }
+
   def apply[A](elements: A*): MyList[A] =
     if (elements.isEmpty) MyNil
     else MyCons(elements.head, apply(elements.tail: _*))

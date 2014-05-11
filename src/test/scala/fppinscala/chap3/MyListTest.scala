@@ -215,6 +215,24 @@ class MyListTest extends Specification with PendingUntilFixed {
       flatMap(MyList[Int]())(x => MyList(x*x, 2*x)) mustEqual MyList()
       flatMap(MyList(1, 2, 3, 4))(x => MyList(x*x, 2*x)) mustEqual MyList(1, 2, 4, 4, 9, 6, 16, 8)
     }
+
+    // Ex 21
+    "be able to implement filter using flatMap" in {
+      filterUsingFM(MyList[Int]())(_ % 2 != 0) mustEqual MyList()
+      filterUsingFM(MyList(1, 2, 3, 4))(_ % 2 == 0) mustEqual MyList(2, 4)
+    }
+
+    // Ex 22
+    "be able to sum corresponding elements of two lists" in {
+      sumCorrespondingElements(MyList(1, 2, 3), MyList(4, 5, 6)) mustEqual(MyList(5, 7, 9))
+    }
+
+    // Ex 23
+    "be able to combine two lists" in {
+      combine(MyList(), MyList(4, 5, 6))((x: Int, y: Int) => x + y) mustEqual(MyList())
+      combine(MyList(1, 2, 3), MyList())((x, y) => x + y) mustEqual(MyList())
+      combine(MyList(1, 2, 3), MyList(4, 5, 6))((x, y) => x + y) mustEqual(MyList(5, 7, 9))
+    }
   }
 }
 
