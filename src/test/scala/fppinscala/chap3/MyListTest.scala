@@ -203,6 +203,18 @@ class MyListTest extends Specification with PendingUntilFixed {
       mapS(MyList(2.0))(_.toString) mustEqual MyList("2.0")
       mapS(MyList(3.0, 5.0, 7.0))(_.toString) mustEqual MyList("3.0", "5.0", "7.0")
     }
+
+    // Ex 19
+    "be able to filter out elements based on a predicate" in {
+      filter(MyList[Int]())(_ % 2 != 0) mustEqual MyList()
+      filter(MyList(1, 2, 3, 4))(_ % 2 == 0) mustEqual MyList(2, 4)
+    }
+
+    // Ex 20
+    "be able to flatMap an input list" in {
+      flatMap(MyList[Int]())(x => MyList(x*x, 2*x)) mustEqual MyList()
+      flatMap(MyList(1, 2, 3, 4))(x => MyList(x*x, 2*x)) mustEqual MyList(1, 2, 4, 4, 9, 6, 16, 8)
+    }
   }
 }
 

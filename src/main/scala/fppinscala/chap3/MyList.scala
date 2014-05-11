@@ -123,6 +123,16 @@ object MyList {
     case MyCons(h, t) => MyCons(f(h), mapS(t)(f))
   }
 
+  def filter[A](list: MyList[A])(p: A => Boolean): MyList[A] = list match {
+    case MyNil => MyNil
+    case MyCons(h, t) => if (p(h)) MyCons(h, filter(t)(p)) else filter(t)(p)
+  }
+
+  def flatMap[A, B](list: MyList[A])(f: A => MyList[B]): MyList[B] = list match {
+    case MyNil => MyNil
+    case MyCons(h, t) => append(f(h), flatMap(t)(f))
+  }
+
   def apply[A](elements: A*): MyList[A] =
     if (elements.isEmpty) MyNil
     else MyCons(elements.head, apply(elements.tail: _*))
