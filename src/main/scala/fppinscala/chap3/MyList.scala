@@ -166,6 +166,23 @@ object MyList {
         MyNil
   }
 
+  def myForAll[A](l: MyList[A])(p: A => Boolean): Boolean = l match {
+    case MyNil => true
+    case MyCons(h, t) =>
+      if(p(h))
+        myForAll(t)(p)
+      else false
+  }
+
+  def exists[A](l: MyList[A])(p: A => Boolean): Boolean = l match {
+    case MyNil => false
+    case MyCons(h, t) =>
+      if(p(h))
+        true
+      else
+        exists(t)(p)
+  }
+
   def apply[A](elements: A*): MyList[A] =
     if (elements.isEmpty) MyNil
     else MyCons(elements.head, apply(elements.tail: _*))

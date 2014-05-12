@@ -246,6 +246,20 @@ class MyListTest extends Specification with PendingUntilFixed {
       takeWhile(emptyInts)(_ <= 2) mustEqual MyNil
       takeWhile(MyList(1, 2, 3))(_ <= 2) mustEqual MyList(1, 2)
     }
+
+    "be able to verify a predicate forall elements" in {
+      myForAll(emptyInts)(_ > 0) must beTrue
+      myForAll(emptyInts)(_ < 0) must beTrue
+      myForAll(MyList(1, 2, 3, 4))(_ > 0) must beTrue
+      myForAll(MyList(1, 2, 3, 4))(_ > 2) must beFalse
+    }
+
+    "be able to do an existance test" in {
+      exists(emptyInts)(_ > 0) must beFalse
+      exists(emptyInts)(_ < 0) must beFalse
+      exists(MyList(1, 2, 3, 4))(_ > 0) must beTrue
+      exists(MyList(-1, -2, -3, -4))(_ > 0) must beFalse
+    }
   }
 }
 
