@@ -260,6 +260,14 @@ class MyListTest extends Specification with PendingUntilFixed {
       exists(MyList(1, 2, 3, 4))(_ > 0) must beTrue
       exists(MyList(-1, -2, -3, -4))(_ > 0) must beFalse
     }
+
+    "be able to scan left" in {
+      1 mustEqual 2
+    }.pendingUntilFixed
+
+    "be able to scan right" in {
+      1 mustEqual 2
+    }.pendingUntilFixed
   }
 }
 
