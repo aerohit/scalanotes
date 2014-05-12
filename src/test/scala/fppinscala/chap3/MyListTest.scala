@@ -233,6 +233,17 @@ class MyListTest extends Specification with PendingUntilFixed {
       combine(MyList(1, 2, 3), MyList())((x, y) => x + y) mustEqual(MyList())
       combine(MyList(1, 2, 3), MyList(4, 5, 6))((x, y) => x + y) mustEqual(MyList(5, 7, 9))
     }
+
+    "be able to take some elements from a list" in {
+      take(MyNil)(4) mustEqual MyNil
+      take(MyList(1, 2, 3))(2) mustEqual MyList(1, 2)
+      take(MyList(1, 2, 3))(4) mustEqual MyList(1, 2, 3)
+    }
+
+    "be able to take some elements while a condition is true" in {
+      takeWhile(MyList[Int]())(_ <= 2) mustEqual MyNil
+      takeWhile(MyList(1, 2, 3))(_ <= 2) mustEqual MyList(1, 2)
+    }
   }
 }
 

@@ -19,9 +19,9 @@ object MyList {
     case MyCons(0, _) => 0
     case MyCons(head, tail) => head * product(tail)
   }
-  
+
   def productFR(list: MyList[Int]): Int = foldRightDefault(list, 1)(_ * _)
-  
+
   def productFL(list: MyList[Int]): Int = foldLeftDefault(list, 1)(_ * _)
 
   // Ex 2
@@ -146,6 +146,24 @@ object MyList {
     case (_, MyNil) => MyNil
     case (MyNil, _) => MyNil
     case (MyCons(h1, t1), MyCons(h2, t2)) => MyCons(f(h1, h2), combine(t1, t2)(f))
+  }
+
+  def take[A](l: MyList[A])(n: Int): MyList[A] = l match {
+    case MyNil => MyNil
+    case MyCons(h, t) =>
+      if (n <= 0)
+        MyNil
+      else
+        MyCons(h, take(t)(n-1))
+  }
+
+  def takeWhile[A](l: MyList[A])(p: A => Boolean): MyList[A] = l match {
+    case MyNil => MyNil
+    case MyCons(h, t) =>
+      if(p(h))
+        MyCons(h, takeWhile(t)(p))
+      else
+        MyNil
   }
 
   def apply[A](elements: A*): MyList[A] =
