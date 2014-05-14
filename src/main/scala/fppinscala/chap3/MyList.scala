@@ -183,6 +183,32 @@ object MyList {
         exists(t)(p)
   }
 
+  // is it possible to make it tail recursive?
+  def scanLeft[A, B](l: MyList[A], z: B)(f: (A, B) => B): MyList[B] = l match {
+    case MyNil => MyList(z)
+    case MyCons(h, t) => MyCons(z, scanLeft(t, f(h, z))(f))
+  }
+
+  // is it possible to make it tail recursive?
+  def scanRight[A, B](l: MyList[A], z: B)(f: (B, A) => B): MyList[B] = l match {
+    case MyNil => MyList(z)
+    case MyCons(h, t) => MyCons(f(z, h), scanRight(t, z)(f))
+  }
+
+  // Ex 24
+  def hasSubsequence[A](list: MyList[A], sublist: MyList[A]): Boolean = {
+    def checkSubsequence(l: MyList[A]): Boolean = (l, sublist) match {
+      case (MyNil, MyNil) => true
+      case (MyNil, _) => false
+      case (_, MyNil) => true
+      case (MyCons(lh, lt), MyCons(sh, st)) =>
+        if (lh == sh)
+          hasSubsequence(lt, st)
+        else false
+    }
+    false
+  }
+
   def apply[A](elements: A*): MyList[A] =
     if (elements.isEmpty) MyNil
     else MyCons(elements.head, apply(elements.tail: _*))

@@ -262,11 +262,31 @@ class MyListTest extends Specification with PendingUntilFixed {
     }
 
     "be able to scan left" in {
-      1 mustEqual 2
-    }.pendingUntilFixed
+      scanLeft(emptyInts, 0)(_ + _) mustEqual MyList(0)
+      scanLeft(MyList(1), 0)(_ + _) mustEqual MyList(0, 1)
+      scanLeft(MyList(1, 2, 3), 0)(_ + _) mustEqual MyList(0, 1, 3, 6)
+      scanLeft(emptyInts, 1)(_ * _) mustEqual MyList(1)
+      scanLeft(MyList(1), 1)(_ * _) mustEqual MyList(1, 1)
+      scanLeft(MyList(1, 2, 3), 1)(_ * _) mustEqual MyList(1, 1, 2, 6)
+    }
 
     "be able to scan right" in {
-      1 mustEqual 2
+      scanRight(emptyInts, 0)(_ + _) mustEqual MyList(0)
+      scanRight(MyList(1), 0)(_ + _) mustEqual MyList(1, 0)
+      scanRight(MyList(1, 2, 3), 0)(_ + _) mustEqual MyList(6, 5, 3, 0)
+      scanRight(emptyInts, 1)(_ * _) mustEqual MyList(1)
+      scanRight(MyList(1), 1)(_ * _) mustEqual MyList(1, 1)
+      scanRight(MyList(1, 2, 3), 1)(_ * _) mustEqual MyList(6, 6, 3, 1)
+    }.pendingUntilFixed
+
+    // Ex 24
+    "be able to check if a list is a sublist of another" in {
+      hasSubsequence(emptyInts, emptyInts) must beTrue
+      hasSubsequence(emptyInts, MyList(1)) must beFalse
+      hasSubsequence(MyList(1, 2, 3, 4), MyList(1, 2)) must beTrue
+      hasSubsequence(MyList(1, 2, 3, 4), MyList(3, 4)) must beTrue
+      hasSubsequence(MyList(1, 2, 3, 4), MyList(4, 3)) must beFalse
+      hasSubsequence(MyList(1, 2, 3), MyList(1, 2, 3, 4)) must beFalse
     }.pendingUntilFixed
   }
 }
