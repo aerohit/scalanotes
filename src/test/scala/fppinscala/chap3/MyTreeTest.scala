@@ -50,5 +50,25 @@ class MyTreeTest extends Specification with PendingUntilFixed {
       treeMap(b1)(x => x * x) mustEqual sb1
       treeMap(r)(x => x * x) mustEqual sr
     }
+
+    // Ex 29
+    "should be able to implement size, maximum, depth, treeMap using fold" in {
+      treeSizeF(l1) mustEqual 1
+      treeSizeF(b1) mustEqual 3
+      treeSizeF(r) mustEqual 7
+
+      implicit def compInt(x: Int, y: Int): Int = x max y
+      maximumF(l1) mustEqual 1
+      maximumF(b1) mustEqual 2
+      maximumF(r) mustEqual 4
+
+      depthF(l1) mustEqual 0
+      depthF(b1) mustEqual 1
+      depthF(r) mustEqual 2
+
+      treeMapF(l1)(x => x * x) mustEqual sl1
+      treeMapF(b1)(x => x * x) mustEqual sb1
+      treeMapF(r)(x => x * x) mustEqual sr
+    }
   }
 }
