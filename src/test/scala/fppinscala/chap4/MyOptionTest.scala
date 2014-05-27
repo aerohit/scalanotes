@@ -49,5 +49,9 @@ class MyOptionTest extends Specification with PendingUntilFixed {
       some.filter(positive) mustEqual some
       some.filter(negative) mustEqual MyNone
     }
+
+    // Ex 2
+    "be able to calculate variance using flatMap" in {
+    }.pendingUntilFixed
   }
 }
