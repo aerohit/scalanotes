@@ -60,5 +60,10 @@ class MyOptionTest extends Specification with PendingUntilFixed {
       liftedSquare(none) mustEqual MyNone
       liftedSquare(some) mustEqual MySome(4)
     }
+
+    "be able to wrap an exception throwing task in to a Try" in {
+      myTry("3".toInt) mustEqual MySome(3)
+      myTry("".toInt) mustEqual MyNone
+    }
   }
 }

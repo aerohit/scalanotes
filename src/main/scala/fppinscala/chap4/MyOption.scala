@@ -42,4 +42,8 @@ object MyOption {
   }
 
   def lift[A, B](f: A => B): MyOption[A] => MyOption[B] = _ map f
+
+  def myTry[A](a: => A): MyOption[A] =
+    try MySome(a)
+    catch { case e: Exception => MyNone}
 }
