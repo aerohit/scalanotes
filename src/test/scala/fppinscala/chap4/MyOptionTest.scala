@@ -52,6 +52,13 @@ class MyOptionTest extends Specification with PendingUntilFixed {
 
     // Ex 2
     "be able to calculate variance using flatMap" in {
+      1 == 3
     }.pendingUntilFixed
+
+    "lift a function" in {
+      val liftedSquare = lift(square)
+      liftedSquare(none) mustEqual MyNone
+      liftedSquare(some) mustEqual MySome(4)
+    }
   }
 }

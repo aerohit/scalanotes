@@ -40,4 +40,6 @@ object MyOption {
     else
       MySome(xs.sum / xs.size)
   }
+
+  def lift[A, B](f: A => B): MyOption[A] => MyOption[B] = _ map f
 }
