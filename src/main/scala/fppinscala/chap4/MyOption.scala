@@ -46,4 +46,17 @@ object MyOption {
   def myTry[A](a: => A): MyOption[A] =
     try MySome(a)
     catch { case e: Exception => MyNone}
+
+  def map2[A, B, C](a: MyOption[A], b: MyOption[B])(f: (A, B) => C): MyOption[C] = (a, b) match {
+    case (MySome(x), MySome(y)) => MySome(f(x, y))
+    case _ => MyNone
+  }
+
+  def insuranceRateQuote(age: Int, speedingTickets: Int): Double = age * speedingTickets / 100.0
+
+  def parseInsuranceRateQuote(age: String, speedingTickets: String): MyOption[Double] = {
+    val ageOpt = myTry(age.toInt)
+    val ticketsOpt = myTry(speedingTickets.toInt)
+    map2(ageOpt, ticketsOpt)(insuranceRateQuote)
+  }
 }

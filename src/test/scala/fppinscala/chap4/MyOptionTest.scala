@@ -19,6 +19,7 @@ class MyOptionTest extends Specification with PendingUntilFixed {
     def square(x: Int): Int = x * x
     def positive(x: Int): Boolean = x >= 0
     def negative(x: Int): Boolean = x < 0
+    def sum(x: Int, y: Int): Int = x + y
 
     val none: MyOption[Int] = MyNone
     val some: MyOption[Int] = MySome(2)
@@ -64,6 +65,20 @@ class MyOptionTest extends Specification with PendingUntilFixed {
     "be able to wrap an exception throwing task in to a Try" in {
       myTry("3".toInt) mustEqual MySome(3)
       myTry("".toInt) mustEqual MyNone
+    }
+
+    "be able to map2" in {
+      map2(MyNone, MyNone)(sum) mustEqual MyNone
+      map2(MyNone, MySome(2))(sum) mustEqual MyNone
+      map2(MySome(2), MyNone)(sum) mustEqual MyNone
+      map2(MySome(2), MySome(3))(sum) mustEqual MySome(5)
+    }
+
+    "be able to calculate insurance rate quote" in {
+      parseInsuranceRateQuote("", "") mustEqual MyNone
+      parseInsuranceRateQuote("2", "") mustEqual MyNone
+      parseInsuranceRateQuote("", "2") mustEqual MyNone
+      parseInsuranceRateQuote("2", "7") mustEqual MySome(0.14)
     }
   }
 }
