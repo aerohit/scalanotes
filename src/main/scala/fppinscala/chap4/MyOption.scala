@@ -11,6 +11,9 @@ sealed trait MyOption[+A] {
     case MySome(v) => f(v)
   }
 
+  def flatMapUsingMap[B](f: A => MyOption[B]): MyOption[B] =
+    map(f) getOrElse MyNone
+
   def getOrElse[B >: A](default: => B): B = this match {
     case MyNone => default
     case MySome(v) => v
@@ -21,12 +24,18 @@ sealed trait MyOption[+A] {
     case x => x
   }
 
+  def orElseUningMap[B >: A](default: => MyOption[B]): MyOption[B] =
+    map (MySome(_)) getOrElse default
+
   def filter(p: A => Boolean): MyOption[A] = this match {
     case MyNone => MyNone
     case x@MySome(v) =>
       if (p(v)) x
       else MyNone
   }
+
+  def filterUsingFlatMap(p: A => Boolean): MyOption[A] =
+    flatMap (a => if (p(a)) this else MyNone)
 }
 
 case class MySome[A](get: A) extends MyOption[A]
