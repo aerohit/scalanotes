@@ -31,12 +31,16 @@ class MyOptionTest extends Specification with PendingUntilFixed {
 
     "flatMap over a function" in {
       none.flatMap((x: Int) => MySome(square(x))) mustEqual MyNone
+      none.flatMap((x: Int) => MyNone) mustEqual MyNone
       some.flatMap((x: Int) => MySome(square(x))) mustEqual MySome(4)
+      some.flatMap((x: Int) => MyNone) mustEqual MyNone
     }
 
     "implement flatMap using map" in {
       none.flatMapUsingMap((x: Int) => MySome(square(x))) mustEqual MyNone
+      none.flatMapUsingMap((x: Int) => MyNone) mustEqual MyNone
       some.flatMapUsingMap((x: Int) => MySome(square(x))) mustEqual MySome(4)
+      some.flatMapUsingMap((x: Int) => MyNone) mustEqual MyNone
     }
 
     "return with a provided default value when none" in {
@@ -46,12 +50,16 @@ class MyOptionTest extends Specification with PendingUntilFixed {
 
     "return with a provided default option when none" in {
       none.orElse(MySome(4)) mustEqual MySome(4)
+      none.orElse(MyNone) mustEqual MyNone
       some.orElse(MySome(4)) mustEqual some
+      some.orElse(MyNone) mustEqual some
     }
 
     "implement orElse using map" in {
       none.orElseUningMap(MySome(4)) mustEqual MySome(4)
+      none.orElseUningMap(MyNone) mustEqual MyNone
       some.orElseUningMap(MySome(4)) mustEqual some
+      some.orElseUningMap(MyNone) mustEqual some
     }
 
     "return option only if the predicate is true" in {
