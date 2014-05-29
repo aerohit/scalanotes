@@ -15,4 +15,11 @@ class MyEitherTest extends Specification with PendingUntilFixed {
       mean(Seq(1, 2, 3)) mustEqual MyRight(2)
     }
   }
+
+  "The safeDiv function" should {
+    "return error when division by zero" in {
+      safeDiv(2, 0) mustEqual MyLeft("java.lang.ArithmeticException: / by zero")
+      safeDiv(4, 2) mustEqual MyRight(2)
+    }.pendingUntilFixed
+  }
 }

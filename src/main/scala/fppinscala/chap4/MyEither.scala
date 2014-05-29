@@ -9,4 +9,8 @@ object MyEither {
     if(xs.isEmpty) MyLeft("error: mean of empty")
     else MyRight(xs.sum/xs.size)
   }
+
+  def safeDiv(x: Int, y: Int): MyEither[Exception, Int] =
+    try MyRight(x/y)
+    catch { case e: Exception => MyLeft(e) }
 }
