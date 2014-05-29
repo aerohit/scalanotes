@@ -61,6 +61,9 @@ object MyOption {
     case _ => MyNone
   }
 
+  def map2UsingFlatMap[A, B, C](aOpt: MyOption[A], bOpt: MyOption[B])(f: (A, B) => C): MyOption[C] =
+    aOpt flatMap (a => bOpt map (b => f(a, b)))
+
   def insuranceRateQuote(age: Int, speedingTickets: Int): Double = age * speedingTickets / 100.0
 
   def parseInsuranceRateQuote(age: String, speedingTickets: String): MyOption[Double] = {

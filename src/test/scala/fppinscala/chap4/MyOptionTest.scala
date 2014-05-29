@@ -99,6 +99,13 @@ class MyOptionTest extends Specification with PendingUntilFixed {
       map2(MySome(2), MySome(3))(sum) mustEqual MySome(5)
     }
 
+    "implement map2 using flatMap" in {
+      map2UsingFlatMap(MyNone, MyNone)(sum) mustEqual MyNone
+      map2UsingFlatMap(MyNone, MySome(2))(sum) mustEqual MyNone
+      map2UsingFlatMap(MySome(2), MyNone)(sum) mustEqual MyNone
+      map2UsingFlatMap(MySome(2), MySome(3))(sum) mustEqual MySome(5)
+    }
+
     "be able to calculate insurance rate quote" in {
       parseInsuranceRateQuote("", "") mustEqual MyNone
       parseInsuranceRateQuote("2", "") mustEqual MyNone
