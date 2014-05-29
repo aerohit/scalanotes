@@ -137,5 +137,12 @@ class MyOptionTest extends Specification with PendingUntilFixed {
       traverseUsingMap2(MyList("2"))(toInt) mustEqual MySome(MyList(2))
       traverseUsingMap2(MyList("", "2"))(toInt) mustEqual MyNone
     }
+
+    "parse a list of strings into integers" in {
+      parseInts(MyList()) mustEqual MySome(MyList())
+      parseInts(MyList("")) mustEqual MyNone
+      parseInts(MyList("2")) mustEqual MySome(MyList(2))
+      parseInts(MyList("", "2", "4")) mustEqual MyNone
+    }
   }
 }

@@ -86,4 +86,7 @@ object MyOption {
     val ticketsOpt = myTry(speedingTickets.toInt)
     map2(ageOpt, ticketsOpt)(insuranceRateQuote)
   }
+
+  def parseInts(list: MyList[String]): MyOption[MyList[Int]] =
+    traverse(list)(x => myTry(x.toInt))
 }
