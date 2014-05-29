@@ -123,19 +123,19 @@ class MyOptionTest extends Specification with PendingUntilFixed {
     }
 
     "be able to traverse a list" in {
-      def dummyFunc(x: Int): MyOption[Int] = if (x % 2 == 0) MySome(x) else MyNone
-      traverse(MyList())(dummyFunc) mustEqual MySome(MyList())
-      traverse(MyList(1))(dummyFunc) mustEqual MyNone
-      traverse(MyList(2))(dummyFunc) mustEqual MySome(MyList(2))
-      traverse(MyList(1, 2))(dummyFunc) mustEqual MyNone
+      def toInt(s: String): MyOption[Int] = myTry(s.toInt)
+      traverse(MyList())(toInt) mustEqual MySome(MyList())
+      traverse(MyList(""))(toInt) mustEqual MyNone
+      traverse(MyList("2"))(toInt) mustEqual MySome(MyList(2))
+      traverse(MyList("", "2"))(toInt) mustEqual MyNone
     }
 
     "be able to implement traverse using map2" in {
-      def dummyFunc(x: Int): MyOption[Int] = if (x % 2 == 0) MySome(x) else MyNone
-      traverseUsingMap2(MyList())(dummyFunc) mustEqual MySome(MyList())
-      traverseUsingMap2(MyList(1))(dummyFunc) mustEqual MyNone
-      traverseUsingMap2(MyList(2))(dummyFunc) mustEqual MySome(MyList(2))
-      traverseUsingMap2(MyList(1, 2))(dummyFunc) mustEqual MyNone
+      def toInt(s: String): MyOption[Int] = myTry(s.toInt)
+      traverseUsingMap2(MyList())(toInt) mustEqual MySome(MyList())
+      traverseUsingMap2(MyList(""))(toInt) mustEqual MyNone
+      traverseUsingMap2(MyList("2"))(toInt) mustEqual MySome(MyList(2))
+      traverseUsingMap2(MyList("", "2"))(toInt) mustEqual MyNone
     }
   }
 }
