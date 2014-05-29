@@ -13,4 +13,8 @@ object MyEither {
   def safeDiv(x: Int, y: Int): MyEither[String, Int] =
     try MyRight(x/y)
     catch { case e: Exception => MyLeft(e.toString) }
+
+  def myTry[A](a: => A): MyEither[String, A] =
+    try MyRight(a)
+    catch { case e: Exception => MyLeft(e.toString) }
 }

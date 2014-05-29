@@ -22,4 +22,11 @@ class MyEitherTest extends Specification with PendingUntilFixed {
       safeDiv(4, 2) mustEqual MyRight(2)
     }
   }
+
+  "The either's api" should {
+    "be able to wrap an exception throwing task in to a Try" in {
+      myTry("3".toInt) mustEqual MyRight(3)
+      myTry("".toInt) mustEqual MyLeft("java.lang.NumberFormatException: For input string: \"\"")
+    }
+  }
 }
