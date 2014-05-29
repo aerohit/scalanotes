@@ -3,6 +3,7 @@ package fppinscala.chap4
 import org.specs2.mutable.Specification
 import org.specs2.execute.PendingUntilFixed
 import MyOption._
+import fppinscala.chap3._
 
 class MyOptionTest extends Specification with PendingUntilFixed {
   "The mean function" should {
@@ -111,6 +112,30 @@ class MyOptionTest extends Specification with PendingUntilFixed {
       parseInsuranceRateQuote("2", "") mustEqual MyNone
       parseInsuranceRateQuote("", "2") mustEqual MyNone
       parseInsuranceRateQuote("2", "7") mustEqual MySome(0.14)
+    }
+
+    "be able to sequence a list of option to an option of list" in {
+      sequence(MyList()) mustEqual MySome(MyList())
+      sequence(MyList(MyNone)) mustEqual MyNone
+      sequence(MyList(MySome(1))) mustEqual MySome(MyList(1))
+      sequence(MyList(MySome(1), MyNone)) mustEqual MyNone
+      sequence(MyList(MySome(1), MySome(2))) mustEqual MySome(MyList(1, 2))
+    }
+
+    "be able to traverse a list" in {
+      def dummyFunc(x: Int): MyOption[Int] = if (x % 2 == 0) MySome(x) else MyNone
+      traverse(MyList())(dummyFunc) mustEqual MySome(MyList())
+      traverse(MyList(1))(dummyFunc) mustEqual MyNone
+      traverse(MyList(2))(dummyFunc) mustEqual MySome(MyList(2))
+      traverse(MyList(1, 2))(dummyFunc) mustEqual MyNone
+    }
+
+    "be able to implement traverse using map2" in {
+      def dummyFunc(x: Int): MyOption[Int] = if (x % 2 == 0) MySome(x) else MyNone
+      traverseUsingMap2(MyList())(dummyFunc) mustEqual MySome(MyList())
+      traverseUsingMap2(MyList(1))(dummyFunc) mustEqual MyNone
+      traverseUsingMap2(MyList(2))(dummyFunc) mustEqual MySome(MyList(2))
+      traverseUsingMap2(MyList(1, 2))(dummyFunc) mustEqual MyNone
     }
   }
 }

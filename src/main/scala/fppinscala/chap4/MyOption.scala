@@ -1,5 +1,7 @@
 package fppinscala.chap4
 
+import fppinscala.chap3._
+
 sealed trait MyOption[+A] {
   def map[B](f: A => B): MyOption[B] = this match {
     case MyNone => MyNone
@@ -63,6 +65,19 @@ object MyOption {
 
   def map2UsingFlatMap[A, B, C](aOpt: MyOption[A], bOpt: MyOption[B])(f: (A, B) => C): MyOption[C] =
     aOpt flatMap (a => bOpt map (b => f(a, b)))
+
+  def sequence[A](list: MyList[MyOption[A]]): MyOption[MyList[A]] =
+    traverse(list)(x => x)
+
+  def traverse[A, B](list: MyList[A])(f: A => MyOption[B]): MyOption[MyList[B]] = list match {
+    case MyNil => MySome(MyList())
+    case MyCons(h, t) => f(h) flatMap (hh => traverse(t)(f) map (tt => MyCons(hh, tt)))
+  }
+
+  def traverseUsingMap2[A, B](list: MyList[A])(f: A => MyOption[B]): MyOption[MyList[B]] = list match {
+    case MyNil => MySome(MyList())
+    case MyCons(h, t) => map2(f(h), traverseUsingMap2(t)(f))(MyCons(_, _))
+  }
 
   def insuranceRateQuote(age: Int, speedingTickets: Int): Double = age * speedingTickets / 100.0
 
