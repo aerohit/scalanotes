@@ -20,6 +20,6 @@ class MyEitherTest extends Specification with PendingUntilFixed {
     "return error when division by zero" in {
       safeDiv(2, 0) mustEqual MyLeft("java.lang.ArithmeticException: / by zero")
       safeDiv(4, 2) mustEqual MyRight(2)
-    }.pendingUntilFixed
+    }
   }
 }
