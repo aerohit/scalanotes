@@ -1,6 +1,11 @@
 package fppinscala.chap4
 
-sealed trait MyEither[+E, +A]
+sealed trait MyEither[+E, +A] {
+  def mapR[B](f: A => B): MyEither[E, B] = this match {
+    case MyLeft(l) => MyLeft(l)
+    case MyRight(r) => MyRight(f(r))
+  }
+}
 case class MyLeft[+E](value: E) extends MyEither[E, Nothing]
 case class MyRight[+A](value: A) extends MyEither[Nothing, A]
 

@@ -24,9 +24,18 @@ class MyEitherTest extends Specification with PendingUntilFixed {
   }
 
   "The either's api" should {
+    def square(x: Int): Int = x * x
+    val l: MyEither[String, Int] = MyLeft("error")
+    val r: MyEither[String, Int] = MyRight(2)
+
     "be able to wrap an exception throwing task in to a Try" in {
       myTry("3".toInt) mustEqual MyRight(3)
       myTry("".toInt) mustEqual MyLeft("java.lang.NumberFormatException: For input string: \"\"")
+    }
+
+    "be able to map on the right projection" in {
+      l.mapR(square) mustEqual MyLeft("error")
+      r.mapR(square) mustEqual MyRight(4)
     }
   }
 }
