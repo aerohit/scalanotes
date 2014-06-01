@@ -25,6 +25,8 @@ class MyEitherTest extends Specification with PendingUntilFixed {
 
   "The either's api" should {
     def square(x: Int): Int = x * x
+    def sum(x: Int, y: Int): Int = x + y
+    def squareE(x: Int): MyEither[String, Int] = MyRight(x * x)
     val l: MyEither[String, Int] = MyLeft("error")
     val r: MyEither[String, Int] = MyRight(2)
 
@@ -36,6 +38,21 @@ class MyEitherTest extends Specification with PendingUntilFixed {
     "be able to map on the right projection" in {
       l.mapR(square) mustEqual MyLeft("error")
       r.mapR(square) mustEqual MyRight(4)
+    }
+
+    "be able to flatMap on the right projection" in {
+      l.flatMapR(squareE) mustEqual MyLeft("error")
+      r.flatMapR(squareE) mustEqual MyRight(4)
+    }
+
+    "be able to orElse on the right projection" in {
+      l.orElseR(MyRight(4)) mustEqual MyRight(4)
+      r.orElseR(MyRight(4)) mustEqual MyRight(2)
+    }
+
+    "be able to map2 on the right projection" in {
+      l.map2R(MyRight(5))(sum) mustEqual MyLeft("error")
+      r.map2R(MyRight(5))(sum) mustEqual MyRight(7)
     }
   }
 }
