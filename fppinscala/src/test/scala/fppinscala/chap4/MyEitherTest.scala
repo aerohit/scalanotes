@@ -67,5 +67,10 @@ class MyEitherTest extends Specification with PendingUntilFixed {
       traverse(List(0))(inverse) mustEqual MyLeft("divide by zero")
       traverse(List(1, 2))(inverse) mustEqual MyRight(List(1.0, 0.5))
     }
+
+    "be able to accumulate multiple errors" in {
+      // implement exercise 8
+      1 == 2
+    }.pendingUntilFixed
   }
 }
