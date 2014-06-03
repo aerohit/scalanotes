@@ -27,6 +27,7 @@ class MyEitherTest extends Specification with PendingUntilFixed {
     def square(x: Int): Int = x * x
     def sum(x: Int, y: Int): Int = x + y
     def squareE(x: Int): MyEither[String, Int] = MyRight(x * x)
+    def inverse(x: Int): MyEither[String, Double] = if (x == 0) MyLeft("divide by zero") else MyRight(1.0 / x)
     val l: MyEither[String, Int] = MyLeft("error")
     val r: MyEither[String, Int] = MyRight(2)
 
@@ -53,6 +54,18 @@ class MyEitherTest extends Specification with PendingUntilFixed {
     "be able to map2 on the right projection" in {
       l.map2R(MyRight(5))(sum) mustEqual MyLeft("error")
       r.map2R(MyRight(5))(sum) mustEqual MyRight(7)
+    }
+
+    "be able to sequence a list of Eithers to return an Either of list" in {
+      sequence(List[MyEither[String, Int]]()) mustEqual MyRight(List[Int]())
+      sequence(List(MyRight(1), MyLeft("divide by zero"))) mustEqual MyLeft("divide by zero")
+      sequence(List(MyRight(1), MyRight(2))) mustEqual MyRight(List(1, 2))
+    }
+
+    "be able to traverse a list to return an Either of list" in {
+      traverse(List())(inverse) mustEqual MyRight(List())
+      traverse(List(0))(inverse) mustEqual MyLeft("divide by zero")
+      traverse(List(1, 2))(inverse) mustEqual MyRight(List(1.0, 0.5))
     }
   }
 }

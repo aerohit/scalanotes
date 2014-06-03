@@ -36,4 +36,12 @@ object MyEither {
   def myTry[A](a: => A): MyEither[String, A] =
     try MyRight(a)
     catch { case e: Exception => MyLeft(e.toString) }
+
+  def traverse[E, A, B](as: List[A])(f: A => MyEither[E, B]): MyEither[E, List[B]] = as match {
+    case Nil => MyRight(Nil)
+    case x :: xs => (f(x) map2R traverse(xs)(f))(_ :: _)
+  }
+
+  def sequence[E, A](es: List[MyEither[E, A]]): MyEither[E, List[A]] =
+    traverse(es)(x => x)
 }
