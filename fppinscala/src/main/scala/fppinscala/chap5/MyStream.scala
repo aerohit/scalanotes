@@ -1,6 +1,6 @@
 package fppinscala.chap5
 
-import fppinscala.chap4._
+import fppinscala.chap4.{MyNone, MyOption, MySome}
 
 sealed trait MyStream[+A] {
   def headOption: MyOption[A] = this match {
@@ -31,15 +31,31 @@ sealed trait MyStream[+A] {
     def go(s: MyStream[A]): List[A] = s match {
       case MyEmpty => buf.toList
       case MyCons(h, t) =>
-	buf += h()
-	go(t())
+        buf += h()
+        go(t())
     }
     go(this)
   }
 
+  def toList: List[A] = toListTailRecursiveFast
+
+  def take(n: Int): MyStream[A] = {
+    if (n > 0) this match {
+      case MyCons(h, t) => MyStream.cons(h(), t().take(n - 1))
+      case MyEmpty => MyEmpty
+    } else {
+      MyEmpty
+    }
+  }
+
+  def takeWhile(p: A => Boolean): MyStream[A] = this match {
+    case MyCons(h, t) if p(h()) => MyStream.cons(h(), t() takeWhile p)
+    case _ => MyEmpty
+  }
 }
 
 case object MyEmpty extends MyStream[Nothing]
+
 case class MyCons[+A](h: () => A, t: () => MyStream[A]) extends MyStream[A]
 
 object MyStream {
